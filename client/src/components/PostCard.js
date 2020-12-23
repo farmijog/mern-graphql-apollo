@@ -39,7 +39,7 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
                         </Avatar>
                     }
                     title={username}
-                    subheader={moment(createdAt).fromNow()}
+                    subheader={moment(createdAt).fromNow(true)}
                 />
                 <CardContent>
                     <Typography>
@@ -51,7 +51,7 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
                         <FavoriteBorderOutlined className={classes.likeIcon} />
                     </IconButton>
                     <Typography>{likeCount}</Typography>
-                    <IconButton disableSpacing href={`/post/${id}`}>
+                    <IconButton href={`/post/${id}`}>
                         <QuestionAnswerOutlined className={classes.commentIcon} />                        
                     </IconButton>
                     <Typography>{commentCount}</Typography>
