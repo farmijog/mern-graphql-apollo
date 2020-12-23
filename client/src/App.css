@@ -3,5 +3,9 @@
 body {
     height: 100vh;
     margin: 0;
-    font-family: "Google Sans", arial;
+    font-family: "Google Sans", arial; 
+}
+
+.grid-item {
+    width: 100% !important;
 }
