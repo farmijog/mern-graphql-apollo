@@ -10,3 +10,15 @@ body {
     width: 100% !important;
 }
 
+.grid-item-post {
+    width: 100% !important;
+    text-align: right !important;
+}
+
+.grid-item-post-title {
+    text-align: left !important;
+}
+
+
+
+

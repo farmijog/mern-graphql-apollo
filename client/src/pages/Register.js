@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import {  Button, CircularProgress, Link, Grid, TextField, Typography ,makeStyles } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
+import { AuthContext } from "../context/auth";
 import { useForm } from "../utils/hooks";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 function Register(props) {
     const classes = useStyles();
     const [errors, setErrors] = useState({});
+    const context = useContext(AuthContext);
 
     const { onChange, onSubmit, values } = useForm(registerUser, {
         username: "",
@@ -26,6 +28,7 @@ function Register(props) {
 
     const [addUser, { loading }] = useMutation(REGISTER_USER, {
         update(_, result) {
+            context.login(result.data.register);
             props.history.push("/");
         },
         onError(err) {
@@ -107,7 +110,7 @@ function Register(props) {
                         </Button>
                         <Typography style={{ paddingTop: 10 }}>
                             ¿Ya tienes una cuenta?
-                            <Link href="/login"> Inicia Sesi&oacute;n</Link>
+                            <Link href="/login"> Iniciar Sesi&oacute;n</Link>
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={5} lg={4} xl={4} className="grid-item">

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+
+import { AuthContext } from "../context/auth";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,8 +17,25 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
     const classes = useStyles();
+    const { user, logout } = useContext(AuthContext);
 
-    return (
+    const navBar = user ? (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Button href="/" color="inherit">
+                        {user.username}
+                    </Button>
+                    <Typography className={classes.title}>
+                        {/* Space between Home and Login */}
+                    </Typography>
+                    <Button onClick={logout} color="inherit">
+                        Logout
+                    </Button>
+                </Toolbar>
+            </AppBar>
+        </div>
+    ) : (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
@@ -35,6 +54,10 @@ function NavBar() {
                 </Toolbar>
             </AppBar>
         </div>
+    ) 
+
+    return (
+        navBar
     )
 }
 
