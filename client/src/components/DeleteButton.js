@@ -17,14 +17,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DeleteButton({ postId, callback }) {
+function DeleteButton({ postId, commentId, callback }) {
     const classes = useStyles();
     const [openDialog, setOpenDialog] = useState(false);
     const handleClose = () => {
         setOpenDialog(false);
     }
 
-    const [deletePost] = useMutation(DELETE_POST_MUTATION, {
+    const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
+
+    const [deletePostOrComment] = useMutation(mutation, {
         refetchQueries: [{ query: FETCH_POST_QUERY }],
         update(proxy){
             setOpenDialog(false);
@@ -36,7 +38,8 @@ function DeleteButton({ postId, callback }) {
             if (callback) callback();
         },
         variables: {
-            postId
+            postId,
+            commentId
         }
     })
     return (
@@ -51,13 +54,13 @@ function DeleteButton({ postId, callback }) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle>
-                    <Typography>¿Seguro que desea eliminar este post?</Typography>
+                    <Typography>¿Esta seguro?</Typography>
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         No
                     </Button>
-                    <Button onClick={deletePost} color="primary">
+                    <Button onClick={deletePostOrComment} color="primary">
                         Si
                     </Button>
                 </DialogActions>
@@ -69,6 +72,21 @@ function DeleteButton({ postId, callback }) {
 const DELETE_POST_MUTATION = gql`
     mutation deletePost($postId: ID!) {
         deletePost(postId: $postId)
+    }
+`;
+
+const DELETE_COMMENT_MUTATION = gql`
+    mutation deleteComment($postId: ID!, $commentId: ID!) {
+        deleteComment(postId: $postId commentId: $commentId){
+            id
+            comments {
+                id
+                username
+                createdAt
+                body
+            }
+            commentCount
+        }
     }
 `;
 

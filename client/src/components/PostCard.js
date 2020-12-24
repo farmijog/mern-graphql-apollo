@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { 
-    makeStyles, Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography,
+    makeStyles, Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography
 } from "@material-ui/core";
 import { QuestionAnswerOutlined } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
@@ -62,7 +62,9 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
                         <QuestionAnswerOutlined className={classes.commentIcon} />                        
                     </IconButton>
                     <Typography>{commentCount}</Typography>
-                    {user && user.username === username && <DeleteButton postId={id} /> }
+                    {user && user.username === username && (
+                        <DeleteButton postId={id} /> 
+                    )}
                 </CardActions>     
             </Card>
         </div>
