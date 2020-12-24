@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import { IconButton, makeStyles, Typography } from "@material-ui/core";
+import { IconButton, makeStyles } from "@material-ui/core";
 import { FavoriteBorderOutlined, FavoriteOutlined } from "@material-ui/icons";
 import { red } from "@material-ui/core/colors";
 

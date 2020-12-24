@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { 
     makeStyles, Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography,
 } from "@material-ui/core";
-import { FavoriteBorderOutlined, QuestionAnswerOutlined, Delete } from "@material-ui/icons";
+import { QuestionAnswerOutlined } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
 import moment from "moment";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,11 +62,7 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
                         <QuestionAnswerOutlined className={classes.commentIcon} />                        
                     </IconButton>
                     <Typography>{commentCount}</Typography>
-                    {user && user.username === username &&(
-                        <IconButton onClick={() => console.log("Delete post xd log...")}>
-                            <Delete className={classes.deleteIcon}/>
-                        </IconButton>
-                    )}
+                    {user && user.username === username && <DeleteButton postId={id} /> }
                 </CardActions>     
             </Card>
         </div>
