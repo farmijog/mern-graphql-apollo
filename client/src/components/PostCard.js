@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { 
     makeStyles, Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography,
 } from "@material-ui/core";
-import { FavoriteBorderOutlined, QuestionAnswerOutlined } from "@material-ui/icons";
+import { FavoriteBorderOutlined, QuestionAnswerOutlined, Delete } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
 import moment from "moment";
+
+import { AuthContext } from "../context/auth";
+import LikeButton from "./LikeButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: red[500]
     },
+    deleteIcon: {
+        color: red[500]
+    },
     likeIcon: {
         color: red[500]
     },
@@ -28,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 function PostCard({ post: { body, createdAt, id, username, likeCount, commentCount, likes }}) {
      
     const classes = useStyles();
+
+    const { user } = useContext(AuthContext);
 
     return (
         <div>
@@ -46,15 +54,18 @@ function PostCard({ post: { body, createdAt, id, username, likeCount, commentCou
                         {body}
                     </Typography>    
                 </CardContent>  
-                <CardActions disableSpacing>
-                    <IconButton aria-label="like">
-                        <FavoriteBorderOutlined className={classes.likeIcon} />
-                    </IconButton>
+                <CardActions disableSpacing className="card-actions" >
+                    <LikeButton user={user} post={{ id, likes, likeCount }} />
                     <Typography>{likeCount}</Typography>
-                    <IconButton href={`/post/${id}`}>
+                    <IconButton href={`/posts/${id}`}>
                         <QuestionAnswerOutlined className={classes.commentIcon} />                        
                     </IconButton>
                     <Typography>{commentCount}</Typography>
+                    {user && user.username === username &&(
+                        <IconButton onClick={() => console.log("Delete post xd log...")}>
+                            <Delete className={classes.deleteIcon}/>
+                        </IconButton>
+                    )}
                 </CardActions>     
             </Card>
         </div>
